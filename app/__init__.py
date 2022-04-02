@@ -20,5 +20,8 @@ app.register_blueprint(auth)
 from app.blueprints.shop import shop 
 app.register_blueprint(shop)
 
+from app.blueprints.seller import seller 
+app.register_blueprint(seller)
+
 
 from app import routes

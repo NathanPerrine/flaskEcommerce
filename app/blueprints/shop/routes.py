@@ -2,7 +2,7 @@ from . import shop
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 # from .forms import shop
-# from .models import ShopItem
+from app.blueprints.seller.models import Book
 
 @shop.route('/')
 def index():
@@ -18,5 +18,14 @@ def cart():
 @shop.route('/store')
 def store():
     title = 'Store'
+    books = Book.query.all()
 
-    return render_template('store.html', tilte=title)
+    return render_template('store.html', tilte=title, books = books)
+
+@shop.route('/full-item/<item_id>', methods=["GET", "POST"])
+@login_required 
+def edit_contact(item_id):
+    item = Book.query.get_or_404(item_id)
+    title = f"{item} Full Info"
+
+    return render_template('full_item.html', title = title, item = item)
