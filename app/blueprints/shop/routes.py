@@ -24,7 +24,7 @@ def store():
 
 @shop.route('/full-item/<item_id>', methods=["GET", "POST"])
 @login_required 
-def edit_contact(item_id):
+def full_item(item_id):
     item = Book.query.get_or_404(item_id)
     title = f"{item} Full Info"
 
