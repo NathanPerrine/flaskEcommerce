@@ -9,3 +9,14 @@ def index():
     title = 'Home'
     return render_template('index.html', title=title)
 
+@shop.route('/cart')
+def cart():
+    title = "Cart"
+    
+    return render_template('cart.html', title=title)
+
+@shop.route('/store')
+def store():
+    title = 'Store'
+
+    return render_template('store.html', tilte=title)

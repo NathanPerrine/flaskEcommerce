@@ -22,7 +22,7 @@ def signup():
             return render_template('signup.html', title=title, form=form)
         
         new_user = User(email = email, username = username, password = password)
-        flash(f"{new_user} has been created!")
+        flash(f"{new_user} has been created!", "success")
         login_user(new_user)
         return redirect(url_for('index'))
     return render_template('signup.html', title = title, form = form)
@@ -39,7 +39,7 @@ def login():
         user = User.query.filter(User.username.ilike(username)).first()
         if user and user.check_password(password):
             login_user(user)
-            flash(f"{user} hs successfully logged in.")
+            flash(f"{user} has successfully logged in.", "success")
             return redirect(url_for('shop.index'))
         else:
             flash("Username and/or password is incorrect.")
@@ -49,5 +49,5 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("You have successfully logged out.")
+    flash("You have successfully logged out.", "success")
     return redirect(url_for('shop.index'))
