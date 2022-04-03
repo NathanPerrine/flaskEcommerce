@@ -12,8 +12,15 @@ def index():
 @shop.route('/view-cart')
 def view_cart():
     title = "Cart"
-    
-    return render_template('view_cart.html', title=title)
+    user_cart = ""
+    books = [Book.query.filter(Book.id == cart.book_id).all()[0] for cart in current_user.my_cart.all()]
+    total = sum([book.price for book in books])
+
+    if books:
+        cart = current_user.my_cart.all()
+        user_cart = zip(books, cart)
+
+    return render_template('view_cart.html', title=title, user_cart = user_cart, total = total)
 
 @shop.route('/store')
 def store():
@@ -37,3 +44,20 @@ def add_to_cart(item_id):
     new_cart = Cart(user_id = current_user.id, book_id = item.id)
     flash(f"{item.title} has been added to your cart.", "success")
     return redirect(url_for('shop.store'))
+
+@shop.route('/checkout')
+@login_required 
+def checkout():
+    my_cart = current_user.my_cart.all()
+    for cart in my_cart:
+        cart.delete()
+    flash(f"You have successfully checked out! Your cart is now empty.", "success")
+    return redirect(url_for('shop.store'))
+
+@shop.route('/remove-item/<cart_id>')
+@login_required 
+def remove_item(cart_id):
+    cart = Cart.query.get_or_404(cart_id)
+    cart.delete()
+    flash(f"Removed from your cart.", "info")
+    return redirect(url_for('shop.view_cart'))
