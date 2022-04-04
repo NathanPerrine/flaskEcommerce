@@ -14,13 +14,10 @@ def index():
         cart = current_user.my_cart.all()
 
     books = Book.query.all()
-    print(books)
-    print(len(books))
     for i in range(3):
         rand = random.randint(0, len(books) -1)
-        print(rand)
         carousel.append(books[rand])
-    print(carousel)
+
     
     return render_template('index.html', title=title, cart=cart, carouselbooks = carousel)
 

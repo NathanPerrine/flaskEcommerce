@@ -14,7 +14,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(100))
     author = db.Column(db.String(50))
-    desc = db.Column(db.String(512))
+    desc = db.Column(db.String(10000))
     price = db.Column(db.Numeric(5, 2))
     image_url = db.Column(db.String(100))
 
@@ -25,7 +25,6 @@ class Book(db.Model):
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
-            print(key, value)
             if key in {'title', 'author', 'desc', 'price'}:
                 setattr(self, key, value)
             db.session.commit()
