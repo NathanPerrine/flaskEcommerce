@@ -38,7 +38,7 @@
                     <div class="modal-footer justify-content-between">
                         <a href="{{ url_for('shop.add_to_cart', item_id=book.id) }}" class="btn btn-success">Add to Cart <i class="fas fa-cart-plus"></i></a>
                         <!-- <button type="button" class="btn btn-success" data-bs-dismiss="modal"></button> -->
-                        <button type="button" class="btn btn-info" data-bs-dismiss="modal">More Info</button>
+                        <a href="{{ url_for('shop.full_item', item_id=book.id) }}" class="btn btn-info">More Info</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
