@@ -3,11 +3,26 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.blueprints.seller.models import Book
 from app.blueprints.shop.models import Cart
+import random
 
 @shop.route('/')
 def index():
     title = 'Home'
-    return render_template('index.html', title=title)
+    cart = ""
+    carousel = []
+    if current_user.is_authenticated:
+        cart = current_user.my_cart.all()
+
+    books = Book.query.all()
+    print(books)
+    print(len(books))
+    for i in range(3):
+        rand = random.randint(0, len(books) -1)
+        print(rand)
+        carousel.append(books[rand])
+    print(carousel)
+    
+    return render_template('index.html', title=title, cart=cart, carouselbooks = carousel)
 
 @shop.route('/view-cart')
 def view_cart():
